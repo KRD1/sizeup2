@@ -16,9 +16,9 @@ cp Resources/SizeUp2.sdef "$APP/Contents/Resources/"
 printf 'APPL????' > "$APP/Contents/PkgInfo"
 
 ICONSET=build/AppIcon.iconset
-if [ ! -f build/AppIcon.icns ]; then
+if [ ! -f build/AppIcon.icns ] || [ Scripts/make_icon.swift -nt build/AppIcon.icns ]; then
   rm -rf "$ICONSET"
-  swift Scripts/make_icon.swift "$ICONSET"
+  swift Scripts/make_icon.swift "$ICONSET" docs/logo.png
   iconutil -c icns "$ICONSET" -o build/AppIcon.icns
 fi
 cp build/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"

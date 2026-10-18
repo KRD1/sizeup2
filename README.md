@@ -1,4 +1,6 @@
-# SizeUp2
+<p align="center"><img src="docs/logo.png" width="160" alt="SizeUp2 icon"></p>
+
+<h1 align="center">SizeUp2</h1>
 
 Native Apple silicon version of the original [SizeUp](https://www.irradiatedsoftware.com/sizeup/), the
 keyboard-driven window manager for macOS.
@@ -110,7 +112,7 @@ Package.swift                 Swift package (single executable target)
 Resources/Info.plist          App bundle metadata (LSUIElement menu bar app)
 Resources/SizeUp2.sdef        AppleScript dictionary
 Scripts/build.sh              Builds, bundles, signs (and optionally installs) the app
-Scripts/make_icon.swift       Generates the app icon
+Scripts/make_icon.swift       Generates the app icon (and docs/logo.png)
 Sources/SizeUp2/
   main.swift                  Entry point
   AppDelegate.swift           Menu bar item and menu, app lifecycle
