@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="SizeUp2">
+	<suite name="Standard Suite" code="????" description="Common classes and commands.">
+		<command name="quit" code="aevtquit" description="Quit the application.">
+			<cocoa class="NSQuitCommand"/>
+		</command>
+	</suite>
+	<suite name="SizeUp Suite" code="SzUp" description="Window sizing and positioning.">
+		<enumeration name="action" code="SUac">
+			<enumerator name="Left" code="SUlt" description="send window left"/>
+			<enumerator name="Right" code="SUrt" description="send window right"/>
+			<enumerator name="Up" code="SUup" description="send window up"/>
+			<enumerator name="Down" code="SUdn" description="send window down"/>
+			<enumerator name="Upper Left" code="SUul" description="send window upper left"/>
+			<enumerator name="Upper Right" code="SUur" description="send window upper right"/>
+			<enumerator name="Lower Left" code="SUll" description="send window lower left"/>
+			<enumerator name="Lower Right" code="SUlr" description="send window lower right"/>
+			<enumerator name="Full Screen" code="SUfs" description="make window full screen"/>
+			<enumerator name="Center" code="SUcr" description="send window center"/>
+			<enumerator name="Prev Monitor" code="SUpm" description="send window to the previous monitor"/>
+			<enumerator name="Next Monitor" code="SUnm" description="send window to the next monitor"/>
+			<enumerator name="SnapBack" code="SUsb" description="snapback window"/>
+			<enumerator name="Space Prev" code="SUsp" description="send window to the previous Space"/>
+			<enumerator name="Space Next" code="SUnt" description="send window to the next Space"/>
+			<enumerator name="Move Left" code="SAlt" description="move window to the left edge without resizing"/>
+			<enumerator name="Move Right" code="SArt" description="move window to the right edge without resizing"/>
+			<enumerator name="Move Up" code="SAup" description="move window to the upper edge without resizing"/>
+			<enumerator name="Move Down" code="SAdn" description="move window to the bottom edge without resizing"/>
+			<enumerator name="Move Upper Left" code="SMul" description="move window to the upper left corner without resizing"/>
+			<enumerator name="Move Upper Right" code="SMur" description="move window to the upper right corner without resizing"/>
+			<enumerator name="Move Lower Left" code="SMll" description="move window to the lower left corner without resizing"/>
+			<enumerator name="Move Lower Right" code="SMlr" description="move window to the lower right corner without resizing"/>
+			<enumerator name="Move Center" code="SMcr" description="move window to the center without resizing"/>
+			<enumerator name="Third Left" code="STlt" description="send window to the left third"/>
+			<enumerator name="Third Center" code="STcr" description="send window to the center third"/>
+			<enumerator name="Third Right" code="STrt" description="send window to the right third"/>
+			<enumerator name="Third Upper" code="STup" description="send window to the upper third"/>
+			<enumerator name="Third Middle" code="STmd" description="send window to the middle third"/>
+			<enumerator name="Third Lower" code="STlw" description="send window to the lower third"/>
+		</enumeration>
+		<class name="application" code="capp" description="The application's top-level scripting object.">
+			<cocoa class="NSApplication"/>
+			<property name="name" code="pnam" description="The name of the application." type="text" access="r"/>
+			<property name="frontmost" code="pisf" description="Is this the frontmost (active) application?" type="boolean" access="r">
+				<cocoa key="isActive"/>
+			</property>
+			<property name="version" code="vers" description="The version of the application." type="text" access="r"/>
+			<property name="enabled" code="enaB" description="Are SizeUp2 keyboard shortcuts enabled?" type="boolean">
+				<cocoa key="enabled"/>
+			</property>
+			<responds-to command="quit">
+				<cocoa method="handleQuitScriptCommand:"/>
+			</responds-to>
+		</class>
+		<command name="do action" code="SzUpDoAc" description="perform a particular action on the frontmost window">
+			<cocoa class="SizeUpCommand"/>
+			<direct-parameter description="action to perform" type="action"/>
+			<parameter name="on monitor" code="SuMi" description="monitor index (1 based) to perform the action on" type="integer" optional="yes">
+				<cocoa key="monitor"/>
+			</parameter>
+		</command>
+		<command name="send to monitor" code="SzUpStmo" description="send the frontmost window to a particular monitor (1 based)">
+			<cocoa class="SizeUpCommand"/>
+			<direct-parameter description="monitor to send to" type="integer"/>
+		</command>
+		<command name="send to space" code="SzUpStsp" description="send the frontmost window to a particular space (1-9; requires the Mission Control 'Switch to Desktop N' shortcuts)">
+			<cocoa class="SizeUpCommand"/>
+			<direct-parameter description="space to send to" type="integer"/>
+		</command>
+		<command name="move to" code="SzUpMove" description="move a window to a given point {x, y}, relative to the monitor's usable area">
+			<cocoa class="SizeUpCommand"/>
+			<direct-parameter description="point to move to">
+				<type type="real" list="yes"/>
+			</direct-parameter>
+			<parameter name="on monitor" code="SuMi" description="monitor index (1 based)" type="integer" optional="yes">
+				<cocoa key="monitor"/>
+			</parameter>
+		</command>
+		<command name="resize to" code="SzUpRsiz" description="resize a window to a given size {width, height}">
+			<cocoa class="SizeUpCommand"/>
+			<direct-parameter description="size to resize to">
+				<type type="real" list="yes"/>
+			</direct-parameter>
+			<parameter name="on monitor" code="SuMi" description="monitor index (1 based)" type="integer" optional="yes">
+				<cocoa key="monitor"/>
+			</parameter>
+		</command>
+		<command name="move and resize to" code="SzUpMvRs" description="move and resize a window to a rectangle {x, y, width, height}, relative to the monitor's usable area">
+			<cocoa class="SizeUpCommand"/>
+			<direct-parameter description="rectangle to move and resize to">
+				<type type="real" list="yes"/>
+			</direct-parameter>
+			<parameter name="on monitor" code="SuMi" description="monitor index (1 based)" type="integer" optional="yes">
+				<cocoa key="monitor"/>
+			</parameter>
+		</command>
+		<command name="fit to grid" code="SzUpFiGr" description="move and resize a window to fit a section of a grid layout">
+			<cocoa class="SizeUpCommand"/>
+			<direct-parameter description="{x, y, width, height} in grid cells (0 based)">
+				<type type="real" list="yes"/>
+			</direct-parameter>
+			<parameter name="grid size" code="SuGs" description="grid size {columns, rows}. Default is {6, 6}." optional="yes">
+				<type type="real" list="yes"/>
+				<cocoa key="gridSize"/>
+			</parameter>
+			<parameter name="on monitor" code="SuMi" description="monitor index (1 based)" type="integer" optional="yes">
+				<cocoa key="monitor"/>
+			</parameter>
+		</command>
+		<command name="show menu" code="SzUpShMe" description="Pop up the SizeUp2 menu bar menu">
+			<cocoa class="SizeUpCommand"/>
+		</command>
+	</suite>
+</dictionary>
